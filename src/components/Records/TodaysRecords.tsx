@@ -87,38 +87,40 @@ const TodaysRecords: React.FC = () => {
             {todaySales.length === 0 ? (
               <p className="no-records">No sales recorded today.</p>
             ) : (
-              <table className="records-table">
-                <thead>
-                  <tr>
-                    <th>Time</th>
-                    <th>Items</th>
-                    <th>MRP (₹)</th>
-                    <th>Discount (₹)</th>
-                    <th>Total (₹)</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {todaySales.map((sale: Sale) => (
-                    <tr key={sale.id}>
-                      <td>{formatDate(sale.date)}</td>
-                      <td>{sale.items}</td>
-                      <td>{sale.mrp.toFixed(2)}</td>
-                      <td>{sale.discount.toFixed(2)}</td>
-                      <td>{sale.totalAmount.toFixed(2)}</td>
-                      <td>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDelete(sale.id, 'sales')}
-                          disabled={isDeleting === sale.id}
-                        >
-                          {isDeleting === sale.id ? 'Deleting...' : 'Delete'}
-                        </button>
-                      </td>
+              <div className="table-responsive">
+                <table className="records-table">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Items</th>
+                      <th>MRP (₹)</th>
+                      <th>Discount (₹)</th>
+                      <th>Total (₹)</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {todaySales.map((sale: Sale) => (
+                      <tr key={sale.id}>
+                        <td>{formatDate(sale.date)}</td>
+                        <td>{sale.items}</td>
+                        <td>{sale.mrp.toFixed(2)}</td>
+                        <td>{sale.discount.toFixed(2)}</td>
+                        <td>{sale.totalAmount.toFixed(2)}</td>
+                        <td>
+                          <button
+                            className="delete-btn"
+                            onClick={() => handleDelete(sale.id, 'sales')}
+                            disabled={isDeleting === sale.id}
+                          >
+                            {isDeleting === sale.id ? 'Deleting...' : 'Delete'}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         ) : (
@@ -126,34 +128,36 @@ const TodaysRecords: React.FC = () => {
             {todayExpenses.length === 0 ? (
               <p className="no-records">No expenses recorded today.</p>
             ) : (
-              <table className="records-table">
-                <thead>
-                  <tr>
-                    <th>Time</th>
-                    <th>Name</th>
-                    <th>Amount (₹)</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {todayExpenses.map((expense: Expense) => (
-                    <tr key={expense.id}>
-                      <td>{formatDate(expense.date)}</td>
-                      <td>{expense.name}</td>
-                      <td>{expense.amount.toFixed(2)}</td>
-                      <td>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDelete(expense.id, 'expenses')}
-                          disabled={isDeleting === expense.id}
-                        >
-                          {isDeleting === expense.id ? 'Deleting...' : 'Delete'}
-                        </button>
-                      </td>
+              <div className="table-responsive">
+                <table className="records-table">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Name</th>
+                      <th>Amount (₹)</th>
+                      <th>Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {todayExpenses.map((expense: Expense) => (
+                      <tr key={expense.id}>
+                        <td>{formatDate(expense.date)}</td>
+                        <td>{expense.name}</td>
+                        <td>{expense.amount.toFixed(2)}</td>
+                        <td>
+                          <button
+                            className="delete-btn"
+                            onClick={() => handleDelete(expense.id, 'expenses')}
+                            disabled={isDeleting === expense.id}
+                          >
+                            {isDeleting === expense.id ? 'Deleting...' : 'Delete'}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         )}
