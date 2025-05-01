@@ -11,7 +11,7 @@ function App() {
     <StoreProvider>
       <div className="App">
         <header className="App-header">
-          <h1>Retail Store Manager</h1>
+          <h1>The Guys</h1>
         </header>
         
         <main className="App-main">
@@ -26,7 +26,7 @@ function App() {
         </main>
         
         <footer className="App-footer">
-          <p>&copy; {new Date().getFullYear()} Retail Store Manager</p>
+          <p>&copy; {new Date().getFullYear()} The Guys</p>
         </footer>
       </div>
     </StoreProvider>
