@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { Sale, Expense } from '../../types';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import './TodaysRecords.css';
 
 const TodaysRecords: React.FC = () => {
@@ -11,7 +13,10 @@ const TodaysRecords: React.FC = () => {
     deleteExpense,
     loading,
     error,
-    refreshData
+    refreshData,
+    getRecordsForDate,
+    selectedDate,
+    setSelectedDate
   } = useStore();
   
   const [activeTab, setActiveTab] = useState<'sales' | 'expenses'>('sales');
@@ -38,15 +43,37 @@ const TodaysRecords: React.FC = () => {
   const handleRefresh = async () => {
     await refreshData();
   };
-  
+
+  const handleDateChange = (date: Date | null, event?: React.SyntheticEvent<any, Event> | undefined) => {
+    if (date) {
+      getRecordsForDate(date);
+    }
+  };
+
+  const isToday = (date: Date): boolean => {
+    const today = new Date();
+    return date.getDate() === today.getDate() && 
+           date.getMonth() === today.getMonth() && 
+           date.getFullYear() === today.getFullYear();
+  };
+
   const formatDate = (date: Date) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const formatFullDate = (date: Date) => {
+    return date.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
   };
   
   if (loading) {
     return (
       <div className="records-container loading">
-        <h2>Today's Records</h2>
+        <h2>Records</h2>
         <div className="loading-spinner">Loading records...</div>
       </div>
     );
@@ -55,7 +82,7 @@ const TodaysRecords: React.FC = () => {
   if (error) {
     return (
       <div className="records-container error">
-        <h2>Today's Records</h2>
+        <h2>Records</h2>
         <div className="error-message">{error}</div>
         <button onClick={handleRefresh} className="refresh-btn">Retry</button>
       </div>
@@ -64,7 +91,32 @@ const TodaysRecords: React.FC = () => {
   
   return (
     <div className="records-container">
-      <h2>Today's Records</h2>
+      <div className="records-header">
+        <h2>{isToday(selectedDate) ? "Today's Records" : "Records"}</h2>
+        
+        <div className="date-picker-container">
+          <div className="date-picker-label">
+            <span className="date-label">Select Date:</span>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              dateFormat="MMMM d, yyyy"
+              className="date-picker"
+              maxDate={new Date()}
+              placeholderText="Select a date"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              todayButton="Today"
+            />
+          </div>
+          {!isToday(selectedDate) && (
+            <div className="selected-date">
+              Showing records for: <span>{formatFullDate(selectedDate)}</span>
+            </div>
+          )}
+        </div>
+      </div>
       
       <div className="tabs">
         <button 
@@ -85,7 +137,7 @@ const TodaysRecords: React.FC = () => {
         {activeTab === 'sales' ? (
           <div className="sales-records">
             {todaySales.length === 0 ? (
-              <p className="no-records">No sales recorded today.</p>
+              <p className="no-records">No sales recorded for this date.</p>
             ) : (
               <div className="table-responsive">
                 <table className="records-table">
@@ -126,7 +178,7 @@ const TodaysRecords: React.FC = () => {
         ) : (
           <div className="expenses-records">
             {todayExpenses.length === 0 ? (
-              <p className="no-records">No expenses recorded today.</p>
+              <p className="no-records">No expenses recorded for this date.</p>
             ) : (
               <div className="table-responsive">
                 <table className="records-table">
@@ -163,7 +215,20 @@ const TodaysRecords: React.FC = () => {
         )}
       </div>
       
-      <button onClick={handleRefresh} className="refresh-btn">Refresh</button>
+      <div className="records-footer">
+        <div className="records-actions">
+          <button 
+            onClick={() => handleDateChange(new Date())} 
+            className="today-btn"
+            disabled={isToday(selectedDate)}
+          >
+            Show Today
+          </button>
+          <button onClick={handleRefresh} className="refresh-btn">
+            Refresh
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -10,10 +10,13 @@ import {
 interface StoreContextType {
   sales: Sale[];
   expenses: Expense[];
+  selectedDate: Date;
+  setSelectedDate: (date: Date) => void;
   addSale: (sale: Omit<Sale, 'id' | 'date'>) => Promise<void>;
   addExpense: (expense: Omit<Expense, 'id' | 'date'>) => Promise<void>;
   deleteSale: (id: string) => Promise<void>;
   deleteExpense: (id: string) => Promise<void>;
+  getRecordsForDate: (date: Date | null) => Promise<void>;
   getTodaySales: () => Sale[];
   getTodayExpenses: () => Expense[];
   getTodaySalesTotal: () => number;
@@ -28,6 +31,7 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sales, setSales] = useState<Sale[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,17 +40,42 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     refreshData();
   }, []);
 
+  // Function to fetch data for the selected date from Firestore
+  const getRecordsForDate = async (date: Date | null) => {
+    if (!date) return;
+    
+    setLoading(true);
+    setError(null);
+    try {
+      // Fetch sales for the selected date
+      const salesData = await getRecords('sales', date);
+      setSales(salesData);
+
+      // Fetch expenses for the selected date
+      const expensesData = await getRecords('expenses', date);
+      setExpenses(expensesData);
+      
+      // Update selected date
+      setSelectedDate(date);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError('Failed to load data. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Function to fetch today's data from Firestore
   const refreshData = async () => {
     setLoading(true);
     setError(null);
     try {
       // Fetch today's sales
-      const salesData = await getRecords('sales');
+      const salesData = await getRecords('sales', selectedDate);
       setSales(salesData);
 
       // Fetch today's expenses
-      const expensesData = await getRecords('expenses');
+      const expensesData = await getRecords('expenses', selectedDate);
       setExpenses(expensesData);
     } catch (err) {
       console.error('Error fetching data:', err);
@@ -143,10 +172,13 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       value={{
         sales,
         expenses,
+        selectedDate,
+        setSelectedDate,
         addSale,
         addExpense,
         deleteSale,
         deleteExpense,
+        getRecordsForDate,
         getTodaySales,
         getTodayExpenses,
         getTodaySalesTotal,
