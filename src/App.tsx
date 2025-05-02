@@ -1,35 +1,31 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import { StoreProvider } from './context/StoreContext';
-import Dashboard from './components/Dashboard/Dashboard';
-import SaleForm from './components/Sales/SaleForm';
-import ExpenseForm from './components/Expenses/ExpenseForm';
-import TodaysRecords from './components/Records/TodaysRecords';
+import { AuthProvider } from './context/AuthContext';
+import Login from './components/Auth/Login';
+import ProtectedRoute from './components/Auth/ProtectedRoute';
+import Main from './components/Main';
 
 function App() {
   return (
-    <StoreProvider>
-      <div className="App">
-        <header className="App-header">
-          <h1>The Guys</h1>
-        </header>
-        
-        <main className="App-main">
-          <Dashboard />
-          
-          <div className="forms-container">
-            <SaleForm />
-            <ExpenseForm />
-          </div>
-          
-          <TodaysRecords />
-        </main>
-        
-        <footer className="App-footer">
-          <p>&copy; {new Date().getFullYear()} The Guys</p>
-        </footer>
-      </div>
-    </StoreProvider>
+    <Router>
+      <AuthProvider>
+        <StoreProvider>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            
+            {/* Protected routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Main />} />
+            </Route>
+            
+            {/* Redirect to login by default */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </StoreProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

@@ -1,61 +1,58 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { useStore } from '../../context/StoreContext';
 import './Dashboard.css';
 
 const Dashboard: React.FC = () => {
+  const { logout } = useAuth();
   const { 
     getTodaySalesTotal, 
     getTodayExpensesTotal, 
-    loading,
-    error,
-    refreshData
+    loading
   } = useStore();
+  const navigate = useNavigate();
 
-  const todaySalesTotal = getTodaySalesTotal();
-  const todayExpensesTotal = getTodayExpensesTotal();
-  const netAmount = todaySalesTotal - todayExpensesTotal;
-
-  const handleRefresh = async () => {
-    await refreshData();
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
-  if (loading) {
-    return (
-      <div className="dashboard loading">
-        <h2>Today's Summary</h2>
-        <div className="loading-spinner">Loading data...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="dashboard error">
-        <h2>Today's Summary</h2>
-        <div className="error-message">{error}</div>
-        <button onClick={handleRefresh} className="refresh-btn">Retry</button>
-      </div>
-    );
-  }
+  const totalSales = getTodaySalesTotal();
+  const totalExpenses = getTodayExpensesTotal();
+  const netTotal = totalSales - totalExpenses;
 
   return (
     <div className="dashboard">
-      <h2>Today's Summary</h2>
-      <div className="dashboard-cards">
-        <div className="dashboard-card sales">
-          <h3>Total Sales</h3>
-          <div className="amount">₹{todaySalesTotal.toFixed(2)}</div>
-        </div>
-        <div className="dashboard-card expenses">
-          <h3>Total Expenses</h3>
-          <div className="amount">₹{todayExpensesTotal.toFixed(2)}</div>
-        </div>
-        <div className={`dashboard-card net ${netAmount >= 0 ? 'profit' : 'loss'}`}>
-          <h3>Net Amount</h3>
-          <div className="amount">₹{netAmount.toFixed(2)}</div>
-        </div>
+      <div className="dashboard-header">
+        <h2>Dashboard</h2>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
-      <button onClick={handleRefresh} className="refresh-btn">Refresh</button>
+
+      {loading ? (
+        <div className="dashboard-loading">Loading...</div>
+      ) : (
+        <div className="summary-cards">
+          <div className="summary-card">
+            <h3>Total Sales</h3>
+            <p className="amount sales-amount">₹{totalSales.toFixed(2)}</p>
+          </div>
+
+          <div className="summary-card">
+            <h3>Total Expenses</h3>
+            <p className="amount expenses-amount">₹{totalExpenses.toFixed(2)}</p>
+          </div>
+
+          <div className="summary-card">
+            <h3>Net Amount</h3>
+            <p className={`amount ${netTotal >= 0 ? 'profit-amount' : 'loss-amount'}`}>
+              ₹{netTotal.toFixed(2)}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

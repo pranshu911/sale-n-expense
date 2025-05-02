@@ -82,6 +82,40 @@ try {
 
 export { db };
 
+// Authentication functions
+export const verifyCredentials = async (loginID: string, password: string) => {
+  try {
+    console.log('Verifying credentials for:', loginID);
+    const credentialsCollection = collection(db, 'credentials');
+    const q = query(
+      credentialsCollection,
+      where('LoginID', '==', loginID)
+    );
+    
+    const querySnapshot = await getDocs(q);
+    
+    if (querySnapshot.empty) {
+      console.log('User not found');
+      return { success: false, message: 'Invalid login ID or password' };
+    }
+    
+    // Check the password against the stored one
+    const userDoc = querySnapshot.docs[0];
+    const userData = userDoc.data();
+    
+    if (userData.Password === password) {
+      console.log('Login successful');
+      return { success: true, user: { id: userDoc.id, loginID: userData.LoginID } };
+    } else {
+      console.log('Incorrect password');
+      return { success: false, message: 'Invalid login ID or password' };
+    }
+  } catch (error) {
+    console.error('Authentication error:', error);
+    throw error;
+  }
+};
+
 // Utility function to get start and end of day for a given date
 export const getStartAndEndOfDay = (date: Date) => {
   const startOfDay = new Date(date);
