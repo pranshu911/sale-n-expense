@@ -5,6 +5,7 @@ export interface Sale {
   discount: number;
   totalAmount: number;
   date: Date;
+  modeOfPayment?: string;
 }
 
 export interface Expense {
@@ -12,4 +13,5 @@ export interface Expense {
   name: string;
   amount: number;
   date: Date;
+  modeOfPayment?: string;
 } 

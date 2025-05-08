@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import './App.css';
 import { StoreProvider } from './context/StoreContext';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Login from './components/Auth/Login';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 import Main from './components/Main';
@@ -11,19 +12,21 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <StoreProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            
-            {/* Protected routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<Main />} />
-            </Route>
-            
-            {/* Redirect to login by default */}
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </Routes>
-        </StoreProvider>
+        <ThemeProvider>
+          <StoreProvider>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              
+              {/* Protected routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/dashboard" element={<Main />} />
+              </Route>
+              
+              {/* Redirect to login by default */}
+              <Route path="*" element={<Navigate to="/login" replace />} />
+            </Routes>
+          </StoreProvider>
+        </ThemeProvider>
       </AuthProvider>
     </Router>
   );

@@ -134,9 +134,9 @@ export const getStartAndEndOfDay = (date: Date) => {
 type SaleInput = Omit<Sale, 'id' | 'date'>;
 
 // Add a new sale to Firestore
-export const addSale = async ({ items, mrp, discount, totalAmount }: SaleInput) => {
+export const addSale = async ({ items, mrp, discount, totalAmount, modeOfPayment }: SaleInput) => {
   try {
-    console.log('Adding sale with data:', { items, mrp, discount, totalAmount });
+    console.log('Adding sale with data:', { items, mrp, discount, totalAmount, modeOfPayment });
     
     // Create a sale object with data validation
     const saleData = {
@@ -144,6 +144,7 @@ export const addSale = async ({ items, mrp, discount, totalAmount }: SaleInput) 
       mrp: Number(mrp) || 0,
       discount: Number(discount || 0),
       totalAmount: Number(totalAmount) || 0,
+      modeOfPayment: modeOfPayment || 'Cash',
       date: serverTimestamp()
     };
     
@@ -168,14 +169,15 @@ export const addSale = async ({ items, mrp, discount, totalAmount }: SaleInput) 
 type ExpenseInput = Omit<Expense, 'id' | 'date'>;
 
 // Add a new expense to Firestore
-export const addExpense = async ({ name, amount }: ExpenseInput) => {
+export const addExpense = async ({ name, amount, modeOfPayment }: ExpenseInput) => {
   try {
-    console.log('Adding expense with data:', { name, amount });
+    console.log('Adding expense with data:', { name, amount, modeOfPayment });
     
     // Create an expense object with data validation
     const expenseData = {
       name: name || '',
       amount: Number(amount) || 0,
+      modeOfPayment: modeOfPayment || 'Cash',
       date: serverTimestamp()
     };
     

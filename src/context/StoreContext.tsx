@@ -4,7 +4,8 @@ import {
   addSale as addSaleToFirestore, 
   addExpense as addExpenseToFirestore,
   getRecords,
-  deleteRecord
+  deleteRecord,
+  updateRecord
 } from '../firebase';
 
 interface StoreContextType {
@@ -16,6 +17,8 @@ interface StoreContextType {
   addExpense: (expense: Omit<Expense, 'id' | 'date'>) => Promise<void>;
   deleteSale: (id: string) => Promise<void>;
   deleteExpense: (id: string) => Promise<void>;
+  updateSale: (id: string, sale: Partial<Omit<Sale, 'id' | 'date'>>) => Promise<void>;
+  updateExpense: (id: string, expense: Partial<Omit<Expense, 'id' | 'date'>>) => Promise<void>;
   getRecordsForDate: (date: Date | null) => Promise<void>;
   getTodaySales: () => Sale[];
   getTodayExpenses: () => Expense[];
@@ -151,6 +154,32 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
   };
 
+  const updateSale = async (id: string, saleData: Partial<Omit<Sale, 'id' | 'date'>>) => {
+    try {
+      await updateRecord('sales', id, saleData);
+      // Update local state
+      setSales(prevSales => prevSales.map(sale => 
+        sale.id === id ? { ...sale, ...saleData } : sale
+      ));
+    } catch (err) {
+      console.error('Error updating sale:', err);
+      setError('Failed to update sale. Please try again.');
+    }
+  };
+
+  const updateExpense = async (id: string, expenseData: Partial<Omit<Expense, 'id' | 'date'>>) => {
+    try {
+      await updateRecord('expenses', id, expenseData);
+      // Update local state
+      setExpenses(prevExpenses => prevExpenses.map(expense => 
+        expense.id === id ? { ...expense, ...expenseData } : expense
+      ));
+    } catch (err) {
+      console.error('Error updating expense:', err);
+      setError('Failed to update expense. Please try again.');
+    }
+  };
+
   const getTodaySales = (): Sale[] => {
     return sales;
   };
@@ -178,6 +207,8 @@ export const StoreProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         addExpense,
         deleteSale,
         deleteExpense,
+        updateSale,
+        updateExpense,
         getRecordsForDate,
         getTodaySales,
         getTodayExpenses,

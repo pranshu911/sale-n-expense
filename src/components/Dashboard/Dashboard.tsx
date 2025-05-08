@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useStore } from '../../context/StoreContext';
+import { useTheme } from '../../context/ThemeContext';
+import ToggleSwitch from '../UI/ToggleSwitch';
 import './Dashboard.css';
 
 const Dashboard: React.FC = () => {
@@ -26,9 +28,12 @@ const Dashboard: React.FC = () => {
     <div className="dashboard">
       <div className="dashboard-header">
         <h2>Dashboard</h2>
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
+        <div className="dashboard-controls">
+          <ToggleSwitch />
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
       </div>
 
       {loading ? (

@@ -4,6 +4,13 @@
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.dark-mode .dashboard {
+  background-color: #1e1e2e;
+  color: #e4e6eb;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .dashboard-header {
@@ -13,10 +20,21 @@
   margin-bottom: 20px;
 }
 
+.dashboard-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .dashboard-header h2 {
   margin: 0;
   color: #333;
   font-size: 1.8rem;
+  transition: color 0.3s;
+}
+
+.dark-mode .dashboard-header h2 {
+  color: #f0f0f0;
 }
 
 .logout-button {
@@ -39,6 +57,11 @@
   padding: 40px;
   color: #666;
   font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.dark-mode .dashboard-loading {
+  color: #aaa;
 }
 
 .summary-cards {
@@ -52,7 +75,12 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s, color 0.3s;
+}
+
+.dark-mode .summary-card {
+  background-color: #2d2d3d;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .summary-card:hover {
@@ -66,6 +94,11 @@
   color: #555;
   font-size: 1.2rem;
   font-weight: 500;
+  transition: color 0.3s;
+}
+
+.dark-mode .summary-card h3 {
+  color: #c0c0c0;
 }
 
 .amount {

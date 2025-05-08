@@ -68,6 +68,8 @@
   margin-bottom: 1rem;
   border-bottom: 1px solid #eee;
   padding-bottom: 0.5rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .tab-btn {
@@ -88,6 +90,51 @@
 .tab-btn.active {
   color: #4c6ef5;
   border-bottom: 2px solid #4c6ef5;
+}
+
+.export-btn {
+  padding: 0.5rem 1rem;
+  background-color: #38b2ac;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.export-btn:hover {
+  background-color: #319795;
+  transform: translateY(-1px);
+}
+
+.export-btn:disabled, .export-btn.disabled {
+  background-color: #9ae6e4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.export-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.3);
+}
+
+@media (max-width: 576px) {
+  .tabs {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .export-btn {
+    margin-top: 0.5rem;
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 .records-content {
@@ -138,6 +185,171 @@
 .delete-btn:disabled {
   background-color: #f1aeb5;
   cursor: not-allowed;
+}
+
+.update-btn {
+  padding: 0.4rem 0.75rem;
+  background-color: #4c6ef5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+  margin-right: 0.5rem;
+}
+
+.update-btn:hover {
+  background-color: #3b5bdb;
+}
+
+.update-btn:disabled {
+  background-color: #bac8ff;
+  cursor: not-allowed;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.modal-content form {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4c6ef5;
+}
+
+.discount-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.discount-container .form-group {
+  flex: 1;
+}
+
+.discount-instruction {
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  color: #666;
+  font-style: italic;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  color: #666;
+  font-family: inherit;
+  background-color: white;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: #4c6ef5;
+}
+
+.form-group select option {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.cancel-btn {
+  padding: 0.6rem 1rem;
+  background-color: #f1f3f5;
+  color: #555;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #e9ecef;
 }
 
 .no-records {

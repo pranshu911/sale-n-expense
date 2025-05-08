@@ -5,6 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #e4e6eb;
 }
 
 code {
@@ -24,4 +32,5 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }

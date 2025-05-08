@@ -6,6 +6,7 @@ const ExpenseForm: React.FC = () => {
   const { addExpense, error } = useStore();
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
+  const [modeOfPayment, setModeOfPayment] = useState('Cash');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +15,10 @@ const ExpenseForm: React.FC = () => {
 
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAmount(e.target.value);
+  };
+
+  const handleModeOfPaymentChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setModeOfPayment(e.target.value);
   };
 
   const handleSubmit = async (e: FormEvent) => {
@@ -31,12 +36,14 @@ const ExpenseForm: React.FC = () => {
       // Add the expense to Firestore
       await addExpense({
         name,
-        amount: parseFloat(amount)
+        amount: parseFloat(amount),
+        modeOfPayment
       });
       
       // Reset form
       setName('');
       setAmount('');
+      setModeOfPayment('Cash');
     } catch (err) {
       console.error('Error submitting expense:', err);
     } finally {
@@ -75,6 +82,24 @@ const ExpenseForm: React.FC = () => {
             required
             disabled={isSubmitting}
           />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="modeOfPayment">Mode of Payment</label>
+          <select
+            id="modeOfPayment"
+            value={modeOfPayment}
+            onChange={handleModeOfPaymentChange}
+            disabled={isSubmitting}
+          >
+            <option value="Cash">Cash</option>
+            <option value="CC">CC</option>
+            <option value="GPay">GPay</option>
+            <option value="Paytm">Paytm</option>
+            <option value="PhonePe">PhonePe</option>
+            <option value="UPI">UPI</option>
+            <option value="Card">Card</option>
+          </select>
         </div>
         
         <button 
