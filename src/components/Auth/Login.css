@@ -1,3 +1,32 @@
+/* Ensure login page always uses light mode styling */
+.light-mode-only {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #333 !important;
+}
+
+.light-mode-only .login-card {
+  background-color: white !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.light-mode-only .login-header h1 {
+  color: #333 !important;
+}
+
+.light-mode-only .login-header h2 {
+  color: #666 !important;
+}
+
+.light-mode-only .form-group label {
+  color: #555 !important;
+}
+
+.light-mode-only .form-group input {
+  background-color: white !important;
+  border: 1px solid #ddd !important;
+  color: #333 !important;
+}
+
 .login-container {
   display: flex;
   justify-content: center;

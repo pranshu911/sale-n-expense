@@ -4,6 +4,13 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
+  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+}
+
+.dark-mode .sale-form-container {
+  background: var(--dark-secondary-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  color: var(--dark-text);
 }
 
 .sale-form-container h2 {
@@ -11,6 +18,11 @@
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: #333;
+  transition: color 0.3s;
+}
+
+.dark-mode .sale-form-container h2 {
+  color: var(--dark-text);
 }
 
 .sale-form {
@@ -29,6 +41,11 @@
   color: #666;
   margin-bottom: 0.5rem;
   text-align: left;
+  transition: color 0.3s;
+}
+
+.dark-mode .form-group label {
+  color: var(--dark-subtle-text);
 }
 
 .form-group input {
@@ -36,7 +53,13 @@
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 1rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background-color 0.3s, color 0.3s;
+}
+
+.dark-mode .form-group input {
+  background-color: var(--dark-input-bg);
+  border-color: var(--dark-border);
+  color: var(--dark-text);
 }
 
 .form-group input:focus {
@@ -60,6 +83,11 @@
   color: #666;
   font-style: italic;
   font-size: 0.8rem;
+  transition: color 0.3s;
+}
+
+.dark-mode .discount-instruction {
+  color: var(--dark-subtle-text);
 }
 
 .form-group select {
@@ -67,21 +95,26 @@
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   font-size: 1rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background-color 0.3s, color 0.3s;
   background-color: white;
   color: #666;
   font-family: inherit;
 }
 
-.form-group select:focus {
-  outline: none;
-  border-color: #4caf50;
-  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+.dark-mode .form-group select {
+  background-color: var(--dark-input-bg);
+  border-color: var(--dark-border);
+  color: var(--dark-text);
 }
 
 .form-group select option {
   font-size: 0.95rem;
   color: #666;
+}
+
+.dark-mode .form-group select option {
+  background-color: var(--dark-input-bg);
+  color: var(--dark-text);
 }
 
 .submit-btn {
