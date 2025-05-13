@@ -268,6 +268,17 @@
   display: flex;
   gap: 0.5rem;
   white-space: nowrap;
+  align-items: center;
+  height: 100%;
+  min-height: 100%;
+}
+
+.records-table td {
+  vertical-align: middle;
+}
+
+.records-table td:last-child {
+  white-space: nowrap;
 }
 
 /* Modal styles */
@@ -542,5 +553,9 @@
   .update-btn {
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
+  }
+
+  .action-buttons {
+    justify-content: flex-start;
   }
 } 

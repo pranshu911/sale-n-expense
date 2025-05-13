@@ -126,7 +126,7 @@
   color: var(--dark-text);
 }
 
-.submit-btn {
+.sale-form .submit-btn {
   margin-top: 1rem;
   padding: 0.8rem;
   background-color: #4caf50;
@@ -140,12 +140,17 @@
   width: 100%;
 }
 
-.submit-btn:hover {
+.sale-form .submit-btn:hover {
   background-color: #3d8b40;
 }
 
-.submit-btn:active {
+.sale-form .submit-btn:active {
   background-color: #2d672f;
+}
+
+.sale-form .submit-btn:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
 }
 
 /* Mobile Responsiveness */
