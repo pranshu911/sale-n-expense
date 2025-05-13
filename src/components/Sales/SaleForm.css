@@ -5,6 +5,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
   transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+  width: 100%;
 }
 
 .dark-mode .sale-form-container {
@@ -29,11 +30,13 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .form-group label {
@@ -54,6 +57,8 @@
   border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.2s, background-color 0.3s, color 0.3s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dark-mode .form-group input {
@@ -71,10 +76,12 @@
 .discount-container {
   display: flex;
   gap: 1rem;
+  width: 100%;
 }
 
 .discount-container .form-group {
   flex: 1;
+  min-width: 0; /* Prevents flex items from overflowing */
 }
 
 .discount-instruction {
@@ -99,6 +106,8 @@
   background-color: white;
   color: #666;
   font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dark-mode .form-group select {
@@ -128,6 +137,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
+  width: 100%;
 }
 
 .submit-btn:hover {
@@ -136,4 +146,26 @@
 
 .submit-btn:active {
   background-color: #2d672f;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .sale-form-container {
+    padding: 1rem;
+  }
+
+  .sale-form-container h2 {
+    font-size: 1.3rem;
+  }
+
+  .discount-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 0.7rem;
+    font-size: 0.95rem;
+  }
 } 

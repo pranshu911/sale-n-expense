@@ -1,24 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 import { useStore } from '../../context/StoreContext';
 import { useTheme } from '../../context/ThemeContext';
 import ToggleSwitch from '../UI/ToggleSwitch';
 import './Dashboard.css';
 
 const Dashboard: React.FC = () => {
-  const { logout } = useAuth();
   const { 
     getTodaySalesTotal, 
     getTodayExpensesTotal, 
     loading
   } = useStore();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
 
   const totalSales = getTodaySalesTotal();
   const totalExpenses = getTodayExpensesTotal();
@@ -30,9 +21,6 @@ const Dashboard: React.FC = () => {
         <h2>Dashboard</h2>
         <div className="dashboard-controls">
           <ToggleSwitch />
-          <button className="logout-button" onClick={handleLogout}>
-            Logout
-          </button>
         </div>
       </div>
 
