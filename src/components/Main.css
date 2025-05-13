@@ -1,9 +1,9 @@
 /* Main container styles */
 .App {
   text-align: center;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -64,7 +64,7 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -97,7 +97,7 @@
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .App {
-    padding: 10px;
+    padding: 5px;
   }
 
   .App-header {
